@@ -9,7 +9,7 @@ class node:
             c.show(level + 1)
 
 def increment(graph):
-    graph.val += 1;
-    for c in graph.children:
+    graph['val'] += 1
+    for c in graph['children']:
         increment(c)
 
