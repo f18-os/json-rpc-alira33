@@ -3,6 +3,7 @@ from bsonrpc import JSONRpc
 import json
 import pickle
 from collections import namedtuple
+import pyjsonrpc
 
 class node:
     def __init__(self, name, children = []):
@@ -50,8 +51,16 @@ res = json.loads(encode_root)
 response = server.increment(res)
 
 print("graph after increment")
-encoded_root = json.dumps(response, default=lambda o: o.__dict__)
-final_root = json.loads(encoded_root)
+
+# d = json.dumps(response)
+# json_acceptable_string = d.replace("'", "\"")
+# datastore = json.loads(json_acceptable_string)
+
+py_obj = pyjsonrpc.parse_response_json(response)
+
+print(py_obj.result)
+
+# final_root = json.loads(encoded_root)
 
 # final_root.show()
 
@@ -59,7 +68,7 @@ final_root = json.loads(encoded_root)
 # print(result)
 
 # close the file
-# file.close()
+file.close()
 
 # Closes the socket 's' also
 rpc.close() 
